@@ -1,0 +1,25 @@
+diff -pruN imsettings-0.106.2.orig/data/xinput.sh.in.in imsettings-0.106.2/data/xinput.sh.in.in
+--- imsettings-0.106.2.orig/data/xinput.sh.in.in	2009-04-07 16:11:28.000000000 +0900
++++ imsettings-0.106.2/data/xinput.sh.in.in	2009-04-13 18:32:35.000000000 +0900
+@@ -60,14 +60,15 @@ function setup_qt_immodule() {
+ }
+ 
+ function setup_xim() {
+-    if is_imsettings_enabled; then
+-	# setup XMODIFIERS
+-	XMODIFIERS="@im=imsettings"
+-	export XMODIFIERS
+-    else
++# XXX: Disable XIM support so far.
++#    if is_imsettings_enabled; then
++#	# setup XMODIFIERS
++#	XMODIFIERS="@im=imsettings"
++#	export XMODIFIERS
++#    else
+ 	[ -z "$XMODIFIERS" -a -n "$XIM" ] && XMODIFIERS="@im=$XIM"
+ 	[ -n "$XMODIFIERS" ] && export XMODIFIERS
+-    fi
++#    fi
+ }
+ 
+ function run_imsettings() {

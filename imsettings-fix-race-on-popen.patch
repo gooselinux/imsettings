@@ -1,0 +1,35 @@
+2010-06-04  Akira TAGOH  <tagoh@redhat.com>
+
+	* imsettings/imsettings-info.c (imsettings_info_notify_properties): 
+	Fix the race condition issue during popen. (rhbz#599924)
+
+Index: imsettings/imsettings-info.c
+===================================================================
+--- imsettings/imsettings-info.c	(リビジョン 396)
++++ imsettings/imsettings-info.c	(作業コピー)
+@@ -107,6 +107,7 @@
+ 
+ 
+ G_DEFINE_TYPE (IMSettingsInfo, imsettings_info, IMSETTINGS_TYPE_OBJECT);
++G_LOCK_DEFINE_STATIC (info);
+ 
+ /*
+  * Private functions
+@@ -228,6 +229,8 @@
+ 	g_free(xinputinfo);
+ 	g_free(lang);
+ 
++	G_LOCK (info);
++
+ 	if (lstat(filename, &st) == -1 ||
+ 	    (fp = popen(cmd->str, "r")) == NULL) {
+ 		/* error happens. don't list. */
+@@ -304,6 +307,8 @@
+ 		}
+ 		pclose(fp);
+ 	}
++
++	G_UNLOCK (info);
+ 	g_string_free(cmd, TRUE);
+ 	g_string_free(str, TRUE);
+ 

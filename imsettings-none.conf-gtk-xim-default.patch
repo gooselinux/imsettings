@@ -1,0 +1,17 @@
+diff -u imsettings-0.107.4/data/none.in.in\~ imsettings-0.107.4/data/none.in.in
+--- imsettings-0.107.4/data/none.in.in~	2008-11-05 21:26:53.000000000 +1000
++++ imsettings-0.107.4/data/none.in.in	2009-11-02 11:44:08.000000000 +1000
+@@ -1,6 +1,12 @@
+ XIM=none
+ XIM_PROGRAM=
+ XIM_ARGS=
+-GTK_IM_MODULE=gtk-im-context-simple
++if [ -f /usr/lib/gtk-2.0/*/immodules/im-xim.so -o \
++     -f /usr/lib64/gtk-2.0/*/immodules/im-xim.so ];
++then
++  GTK_IM_MODULE=xim
++else
++  GTK_IM_MODULE=gtk-im-context-simple
++fi
+ QT_IM_MODULE=xim
+ IMSETTINGS_IGNORE_ME=yes
